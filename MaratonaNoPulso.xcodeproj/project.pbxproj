@@ -104,16 +104,12 @@
 		CC7F0B442ED3EF3000CEBC64 /* MaratonaNoPulso */ = {
 			isa = PBXGroup;
 			children = (
+				CC7F0B902ED47A9700CEBC64 /* Views */,
+				CC7F0B8F2ED47A7500CEBC64 /* App */,
 				CC7F0B8E2ED4761300CEBC64 /* Core */,
 				CC7F0B532ED3F92A00CEBC64 /* MaratonaNoPulso.entitlements */,
 				CC7F0B522ED3F7E600CEBC64 /* Info.plist */,
-				CC7F0B3C2ED3EF3000CEBC64 /* Assets.xcassets */,
-				CC7F0B3E2ED3EF3000CEBC64 /* ContentView.swift */,
-				CC7F0B402ED3EF3000CEBC64 /* MainTabView.swift */,
-				CC7F0B412ED3EF3000CEBC64 /* MaratonaNoPulsoApp.swift */,
 				CC7F0B422ED3EF3000CEBC64 /* Models.swift */,
-				CC7F0B432ED3EF3000CEBC64 /* VoiceCoachView.swift */,
-				CC7F0B762ED4051600CEBC64 /* WeeklyPlanView.swift */,
 			);
 			path = MaratonaNoPulso;
 			sourceTree = "<group>";
@@ -127,6 +123,26 @@
 				CC7F0B3D2ED3EF3000CEBC64 /* AudioManager.swift */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		CC7F0B8F2ED47A7500CEBC64 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				CC7F0B412ED3EF3000CEBC64 /* MaratonaNoPulsoApp.swift */,
+				CC7F0B3E2ED3EF3000CEBC64 /* ContentView.swift */,
+				CC7F0B3C2ED3EF3000CEBC64 /* Assets.xcassets */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		CC7F0B902ED47A9700CEBC64 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				CC7F0B402ED3EF3000CEBC64 /* MainTabView.swift */,
+				CC7F0B432ED3EF3000CEBC64 /* VoiceCoachView.swift */,
+				CC7F0B762ED4051600CEBC64 /* WeeklyPlanView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		CCBD4D702ED0072400DDE2A9 = {

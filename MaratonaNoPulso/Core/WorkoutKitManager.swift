@@ -1,9 +1,7 @@
 import Foundation
 import WorkoutKit
 import HealthKit
-
-// Certifique-se de importar Models se estiverem em outro módulo,
-// ou que WorkoutPlan esteja acessível aqui.
+import Combine
 
 class WorkoutKitManager: ObservableObject {
     
@@ -11,69 +9,88 @@ class WorkoutKitManager: ObservableObject {
     
     private init() {}
     
-    /// Transforma o plano da AI em um CustomWorkout do iOS 17+
-    /// Retorna um CustomWorkout pronto para ser apresentado via .workoutPreview
-    func createCustomWorkout(from plan: WorkoutPlan) -> CustomWorkout? {
+    // Placeholder estático
+    static let emptyPlan: WorkoutKit.WorkoutPlan = {
+        let step = IntervalStep(.work, goal: .time(1, .minutes))
+        let block = IntervalBlock(steps: [step], iterations: 1)
+        let workout = CustomWorkout(activity: .running, location: .outdoor, displayName: "Empty", warmup: nil, blocks: [block], cooldown: nil)
+        return WorkoutKit.WorkoutPlan(.custom(workout))
+    }()
+    
+    func requestAuthorization() async -> Bool { return true }
+
+    // MARK: - Conversão 1: De DailyWorkout (Plano Semanal)
+    func createCustomWorkout(from dailyWorkout: DailyWorkout) -> CustomWorkout? {
+        return buildCustomWorkout(
+            type: dailyWorkout.workout_type,
+            name: dailyWorkout.workout_name,
+            segments: dailyWorkout.segments,
+            fallbackDuration: dailyWorkout.duration_minutes,
+            fallbackDistance: dailyWorkout.distance_km
+        )
+    }
+    
+    // MARK: - Conversão 2: De AIWorkoutPlan (Treino Avulso) <--- TIPO CORRIGIDO
+    func createCustomWorkout(from plan: AIWorkoutPlan) -> CustomWorkout? {
+        let type = WorkoutType.from(string: plan.workout_type)
         
-        // 1. Converter segmentos (Warmup, Main, Cooldown) em IntervalSteps
-        var steps: [IntervalStep] = []
+        return buildCustomWorkout(
+            type: type,
+            name: "Treino Personalizado",
+            segments: plan.segments,
+            fallbackDuration: plan.duration_minutes,
+            fallbackDistance: plan.distance_km
+        )
+    }
+
+    // MARK: - Lógica de Construção
+    private func buildCustomWorkout(type: WorkoutType, name: String, segments: [WorkoutSegment]?, fallbackDuration: Int, fallbackDistance: Double?) -> CustomWorkout? {
+        var warmupStep: WorkoutStep?
+        var cooldownStep: WorkoutStep?
+        var blocks: [IntervalBlock] = []
         
-        if let segments = plan.segments {
+        if let segments = segments, !segments.isEmpty {
             for segment in segments {
-                let step = createStep(from: segment)
-                steps.append(step)
+                let segType = segment.type.lowercased()
+                
+                if segType.contains("warm") {
+                    warmupStep = createSingleStep(duration: segment.duration_minutes)
+                } else if segType.contains("cool") {
+                    cooldownStep = createSingleStep(duration: segment.duration_minutes)
+                } else {
+                    let purpose: IntervalStep.Purpose = segType.contains("recovery") ? .recovery : .work
+                    let step = createIntervalStep(purpose: purpose, duration: segment.duration_minutes)
+                    blocks.append(IntervalBlock(steps: [step], iterations: 1))
+                }
             }
         } else {
-            // Fallback se não houver segmentos: cria um treino simples
-            let mainGoal = convertToGoal(duration: plan.duration_minutes)
-            steps.append(IntervalStep(purpose: .work, goal: mainGoal))
+            let step = createIntervalStep(purpose: .work, duration: fallbackDuration)
+            blocks.append(IntervalBlock(steps: [step], iterations: 1))
         }
         
-        // 2. Criar o Bloco de Intervalo (Obrigatório no WorkoutKit)
-        // Iterations = 1 significa que o bloco roda uma vez sequencialmente
-        let block = IntervalBlock(steps: steps, iterations: 1)
+        let activity: HKWorkoutActivityType
+        switch type {
+            case .outdoor_run, .indoor_run: activity = .running
+            case .walk: activity = .walking
+            case .cross_training: activity = .crossTraining
+            default: activity = .running
+        }
         
-        // 3. Criar o objeto CustomWorkout
-        // Este objeto é o que o iOS reconhece nativamente como Template
-        let workout = CustomWorkout(
-            activity: .running,
-            location: .outdoor, // Pode mudar para .indoor se necessário
-            displayName: "MaratonaNoPulso: \(plan.workout_type.capitalized)",
-            warmup: nil, // Já incluímos o warmup dentro dos steps/blocos para mais controle
-            blocks: [block],
-            cooldown: nil // Já incluímos no steps
+        return CustomWorkout(
+            activity: activity,
+            location: .outdoor,
+            displayName: name,
+            warmup: warmupStep,
+            blocks: blocks,
+            cooldown: cooldownStep
         )
-        
-        return workout
     }
     
-    // MARK: - Helpers Privados
-    
-    private func createStep(from segment: WorkoutSegment) -> IntervalStep {
-        // Definir o propósito (Aquecimento, Trabalho, Desaquecimento)
-        let purpose: IntervalStep.Purpose
-        switch segment.type.lowercased() {
-        case "warmup", "warm-up":
-            purpose = .warmup
-        case "cooldown", "cool-down":
-            purpose = .cooldown
-        case "recovery":
-            purpose = .recovery
-        default:
-            purpose = .work
-        }
-        
-        // Definir a meta (Tempo ou Distância)
-        // A AI manda duration_minutes. Se for 0, tentamos distância (lógica futura)
-        let goal: WorkoutGoal = .time(Double(segment.duration_minutes), .minutes)
-        
-        // Opcional: Adicionar Alerta de Ritmo (Pace Alert)
-        // Se o JSON tiver "pace_min_per_km", podemos adicionar aqui um `WaitGoal` ou `Alert`
-        
-        return IntervalStep(purpose: purpose, goal: goal)
+    private func createSingleStep(duration: Int) -> WorkoutStep {
+        return WorkoutStep(goal: .time(Double(duration), .minutes))
     }
     
-    private func convertToGoal(duration: Int) -> WorkoutGoal {
-        return .time(Double(duration), .minutes)
+    private func createIntervalStep(purpose: IntervalStep.Purpose, duration: Int) -> IntervalStep {
+        return IntervalStep(purpose, goal: .time(Double(duration), .minutes))
     }
 }
