@@ -3,7 +3,7 @@ import Combine
 
 class AIService: ObservableObject {
     
-    private let openAIAPIKey = "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"
+    private let openAIAPIKey = Secrets.openAIAPIKey
     
     // MARK: - Treino Avulso (VoiceCoachView)
     func generateWorkoutPlan(from userMessage: String) async -> AIWorkoutPlan? {

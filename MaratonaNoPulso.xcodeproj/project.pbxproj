@@ -21,6 +21,7 @@
 		CC7F0B502ED3EFC100CEBC64 /* PhoneSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7F0B4E2ED3EFC100CEBC64 /* PhoneSessionManager.swift */; };
 		CC7F0B782ED4051600CEBC64 /* WeeklyPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7F0B762ED4051600CEBC64 /* WeeklyPlanView.swift */; };
 		CC7F0B8D2ED41C5500CEBC64 /* WorkoutKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7F0B8C2ED41C5500CEBC64 /* WorkoutKitManager.swift */; };
+		CC7F0B922ED487AA00CEBC64 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7F0B912ED487AA00CEBC64 /* Secrets.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		CC7F0B532ED3F92A00CEBC64 /* MaratonaNoPulso.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MaratonaNoPulso.entitlements; sourceTree = "<group>"; };
 		CC7F0B762ED4051600CEBC64 /* WeeklyPlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyPlanView.swift; sourceTree = "<group>"; };
 		CC7F0B8C2ED41C5500CEBC64 /* WorkoutKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutKitManager.swift; sourceTree = "<group>"; };
+		CC7F0B912ED487AA00CEBC64 /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 		CCBD4D792ED0072400DDE2A9 /* MaratonaNoPulso.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MaratonaNoPulso.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -121,6 +123,7 @@
 				CC7F0B3F2ED3EF3000CEBC64 /* HealthKitManager.swift */,
 				CC7F0B3B2ED3EF3000CEBC64 /* AIService.swift */,
 				CC7F0B3D2ED3EF3000CEBC64 /* AudioManager.swift */,
+				CC7F0B912ED487AA00CEBC64 /* Secrets.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -279,6 +282,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CC7F0B462ED3EF3000CEBC64 /* AudioManager.swift in Sources */,
+				CC7F0B922ED487AA00CEBC64 /* Secrets.swift in Sources */,
 				CC7F0B472ED3EF3000CEBC64 /* HealthKitManager.swift in Sources */,
 				CC7F0B482ED3EF3000CEBC64 /* MainTabView.swift in Sources */,
 				CC7F0B8D2ED41C5500CEBC64 /* WorkoutKitManager.swift in Sources */,
