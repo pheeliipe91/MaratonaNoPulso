@@ -111,7 +111,6 @@
 				CC7F0B8E2ED4761300CEBC64 /* Core */,
 				CC7F0B532ED3F92A00CEBC64 /* MaratonaNoPulso.entitlements */,
 				CC7F0B522ED3F7E600CEBC64 /* Info.plist */,
-				CC7F0B422ED3EF3000CEBC64 /* Models.swift */,
 			);
 			path = MaratonaNoPulso;
 			sourceTree = "<group>";
@@ -124,6 +123,7 @@
 				CC7F0B3B2ED3EF3000CEBC64 /* AIService.swift */,
 				CC7F0B3D2ED3EF3000CEBC64 /* AudioManager.swift */,
 				CC7F0B912ED487AA00CEBC64 /* Secrets.swift */,
+				CC7F0B422ED3EF3000CEBC64 /* Models.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
