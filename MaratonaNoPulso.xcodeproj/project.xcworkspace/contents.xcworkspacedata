@@ -4,4 +4,10 @@
    <FileRef
       location = "self:">
    </FileRef>
+   <FileRef
+      location = "group:WorkoutKitManager 4.swift">
+   </FileRef>
+   <FileRef
+      location = "group:WorkoutKitManager 5.swift">
+   </FileRef>
 </Workspace>

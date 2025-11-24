@@ -6,19 +6,82 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		CC7F0B1E2ED3E7D900CEBC64 /* Watch-Maratona-No-Pulso Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = CC7F0B142ED3E7D800CEBC64 /* Watch-Maratona-No-Pulso Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		CC7F0B452ED3EF3000CEBC64 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC7F0B3C2ED3EF3000CEBC64 /* Assets.xcassets */; };
+		CC7F0B462ED3EF3000CEBC64 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7F0B3D2ED3EF3000CEBC64 /* AudioManager.swift */; };
+		CC7F0B472ED3EF3000CEBC64 /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7F0B3F2ED3EF3000CEBC64 /* HealthKitManager.swift */; };
+		CC7F0B482ED3EF3000CEBC64 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7F0B402ED3EF3000CEBC64 /* MainTabView.swift */; };
+		CC7F0B492ED3EF3000CEBC64 /* VoiceCoachView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7F0B432ED3EF3000CEBC64 /* VoiceCoachView.swift */; };
+		CC7F0B4A2ED3EF3000CEBC64 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7F0B3E2ED3EF3000CEBC64 /* ContentView.swift */; };
+		CC7F0B4B2ED3EF3000CEBC64 /* AIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7F0B3B2ED3EF3000CEBC64 /* AIService.swift */; };
+		CC7F0B4C2ED3EF3000CEBC64 /* MaratonaNoPulsoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7F0B412ED3EF3000CEBC64 /* MaratonaNoPulsoApp.swift */; };
+		CC7F0B4D2ED3EF3000CEBC64 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7F0B422ED3EF3000CEBC64 /* Models.swift */; };
+		CC7F0B4F2ED3EFC100CEBC64 /* PhoneSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7F0B4E2ED3EFC100CEBC64 /* PhoneSessionManager.swift */; };
+		CC7F0B502ED3EFC100CEBC64 /* PhoneSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7F0B4E2ED3EFC100CEBC64 /* PhoneSessionManager.swift */; };
+		CC7F0B782ED4051600CEBC64 /* WeeklyPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7F0B762ED4051600CEBC64 /* WeeklyPlanView.swift */; };
+		CC7F0B8D2ED41C5500CEBC64 /* WorkoutKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7F0B8C2ED41C5500CEBC64 /* WorkoutKitManager.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CC7F0B1C2ED3E7D900CEBC64 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CCBD4D712ED0072400DDE2A9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CC7F0B132ED3E7D800CEBC64;
+			remoteInfo = "Watch-Maratona-No-Pulso Watch App";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		CC7F0B222ED3E7D900CEBC64 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				CC7F0B1E2ED3E7D900CEBC64 /* Watch-Maratona-No-Pulso Watch App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		CC7F0B142ED3E7D800CEBC64 /* Watch-Maratona-No-Pulso Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Watch-Maratona-No-Pulso Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC7F0B3B2ED3EF3000CEBC64 /* AIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIService.swift; sourceTree = "<group>"; };
+		CC7F0B3C2ED3EF3000CEBC64 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CC7F0B3D2ED3EF3000CEBC64 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
+		CC7F0B3E2ED3EF3000CEBC64 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		CC7F0B3F2ED3EF3000CEBC64 /* HealthKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitManager.swift; sourceTree = "<group>"; };
+		CC7F0B402ED3EF3000CEBC64 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
+		CC7F0B412ED3EF3000CEBC64 /* MaratonaNoPulsoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaratonaNoPulsoApp.swift; sourceTree = "<group>"; };
+		CC7F0B422ED3EF3000CEBC64 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		CC7F0B432ED3EF3000CEBC64 /* VoiceCoachView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceCoachView.swift; sourceTree = "<group>"; };
+		CC7F0B4E2ED3EFC100CEBC64 /* PhoneSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneSessionManager.swift; sourceTree = "<group>"; };
+		CC7F0B522ED3F7E600CEBC64 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		CC7F0B532ED3F92A00CEBC64 /* MaratonaNoPulso.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MaratonaNoPulso.entitlements; sourceTree = "<group>"; };
+		CC7F0B762ED4051600CEBC64 /* WeeklyPlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyPlanView.swift; sourceTree = "<group>"; };
+		CC7F0B8C2ED41C5500CEBC64 /* WorkoutKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutKitManager.swift; sourceTree = "<group>"; };
 		CCBD4D792ED0072400DDE2A9 /* MaratonaNoPulso.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MaratonaNoPulso.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		CCBD4D7B2ED0072400DDE2A9 /* MaratonaNoPulso */ = {
+		CC7F0B152ED3E7D800CEBC64 /* Watch-Maratona-No-Pulso Watch App */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = MaratonaNoPulso;
+			path = "Watch-Maratona-No-Pulso Watch App";
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		CC7F0B112ED3E7D800CEBC64 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CCBD4D762ED0072400DDE2A9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -29,10 +92,48 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CC7F0B232ED3EC6700CEBC64 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				CC7F0B152ED3E7D800CEBC64 /* Watch-Maratona-No-Pulso Watch App */,
+				CC7F0B4E2ED3EFC100CEBC64 /* PhoneSessionManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		CC7F0B442ED3EF3000CEBC64 /* MaratonaNoPulso */ = {
+			isa = PBXGroup;
+			children = (
+				CC7F0B8E2ED4761300CEBC64 /* Core */,
+				CC7F0B532ED3F92A00CEBC64 /* MaratonaNoPulso.entitlements */,
+				CC7F0B522ED3F7E600CEBC64 /* Info.plist */,
+				CC7F0B3C2ED3EF3000CEBC64 /* Assets.xcassets */,
+				CC7F0B3E2ED3EF3000CEBC64 /* ContentView.swift */,
+				CC7F0B402ED3EF3000CEBC64 /* MainTabView.swift */,
+				CC7F0B412ED3EF3000CEBC64 /* MaratonaNoPulsoApp.swift */,
+				CC7F0B422ED3EF3000CEBC64 /* Models.swift */,
+				CC7F0B432ED3EF3000CEBC64 /* VoiceCoachView.swift */,
+				CC7F0B762ED4051600CEBC64 /* WeeklyPlanView.swift */,
+			);
+			path = MaratonaNoPulso;
+			sourceTree = "<group>";
+		};
+		CC7F0B8E2ED4761300CEBC64 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				CC7F0B8C2ED41C5500CEBC64 /* WorkoutKitManager.swift */,
+				CC7F0B3F2ED3EF3000CEBC64 /* HealthKitManager.swift */,
+				CC7F0B3B2ED3EF3000CEBC64 /* AIService.swift */,
+				CC7F0B3D2ED3EF3000CEBC64 /* AudioManager.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
 		CCBD4D702ED0072400DDE2A9 = {
 			isa = PBXGroup;
 			children = (
-				CCBD4D7B2ED0072400DDE2A9 /* MaratonaNoPulso */,
+				CC7F0B442ED3EF3000CEBC64 /* MaratonaNoPulso */,
+				CC7F0B232ED3EC6700CEBC64 /* Managers */,
 				CCBD4D7A2ED0072400DDE2A9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +142,7 @@
 			isa = PBXGroup;
 			children = (
 				CCBD4D792ED0072400DDE2A9 /* MaratonaNoPulso.app */,
+				CC7F0B142ED3E7D800CEBC64 /* Watch-Maratona-No-Pulso Watch App.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -48,6 +150,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		CC7F0B132ED3E7D800CEBC64 /* Watch-Maratona-No-Pulso Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CC7F0B1F2ED3E7D900CEBC64 /* Build configuration list for PBXNativeTarget "Watch-Maratona-No-Pulso Watch App" */;
+			buildPhases = (
+				CC7F0B102ED3E7D800CEBC64 /* Sources */,
+				CC7F0B112ED3E7D800CEBC64 /* Frameworks */,
+				CC7F0B122ED3E7D800CEBC64 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				CC7F0B152ED3E7D800CEBC64 /* Watch-Maratona-No-Pulso Watch App */,
+			);
+			name = "Watch-Maratona-No-Pulso Watch App";
+			packageProductDependencies = (
+			);
+			productName = "Watch-Maratona-No-Pulso Watch App";
+			productReference = CC7F0B142ED3E7D800CEBC64 /* Watch-Maratona-No-Pulso Watch App.app */;
+			productType = "com.apple.product-type.application";
+		};
 		CCBD4D782ED0072400DDE2A9 /* MaratonaNoPulso */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CCBD4D842ED0072500DDE2A9 /* Build configuration list for PBXNativeTarget "MaratonaNoPulso" */;
@@ -55,13 +179,12 @@
 				CCBD4D752ED0072400DDE2A9 /* Sources */,
 				CCBD4D762ED0072400DDE2A9 /* Frameworks */,
 				CCBD4D772ED0072400DDE2A9 /* Resources */,
+				CC7F0B222ED3E7D900CEBC64 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				CCBD4D7B2ED0072400DDE2A9 /* MaratonaNoPulso */,
+				CC7F0B1D2ED3E7D900CEBC64 /* PBXTargetDependency */,
 			);
 			name = MaratonaNoPulso;
 			packageProductDependencies = (
@@ -80,6 +203,9 @@
 				LastSwiftUpdateCheck = 2610;
 				LastUpgradeCheck = 2610;
 				TargetAttributes = {
+					CC7F0B132ED3E7D800CEBC64 = {
+						CreatedOnToolsVersion = 26.1.1;
+					};
 					CCBD4D782ED0072400DDE2A9 = {
 						CreatedOnToolsVersion = 26.1.1;
 					};
@@ -100,31 +226,133 @@
 			projectRoot = "";
 			targets = (
 				CCBD4D782ED0072400DDE2A9 /* MaratonaNoPulso */,
+				CC7F0B132ED3E7D800CEBC64 /* Watch-Maratona-No-Pulso Watch App */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		CCBD4D772ED0072400DDE2A9 /* Resources */ = {
+		CC7F0B122ED3E7D800CEBC64 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CCBD4D772ED0072400DDE2A9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CC7F0B452ED3EF3000CEBC64 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		CC7F0B102ED3E7D800CEBC64 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CC7F0B4F2ED3EFC100CEBC64 /* PhoneSessionManager.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CCBD4D752ED0072400DDE2A9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC7F0B462ED3EF3000CEBC64 /* AudioManager.swift in Sources */,
+				CC7F0B472ED3EF3000CEBC64 /* HealthKitManager.swift in Sources */,
+				CC7F0B482ED3EF3000CEBC64 /* MainTabView.swift in Sources */,
+				CC7F0B8D2ED41C5500CEBC64 /* WorkoutKitManager.swift in Sources */,
+				CC7F0B492ED3EF3000CEBC64 /* VoiceCoachView.swift in Sources */,
+				CC7F0B4A2ED3EF3000CEBC64 /* ContentView.swift in Sources */,
+				CC7F0B502ED3EFC100CEBC64 /* PhoneSessionManager.swift in Sources */,
+				CC7F0B782ED4051600CEBC64 /* WeeklyPlanView.swift in Sources */,
+				CC7F0B4B2ED3EF3000CEBC64 /* AIService.swift in Sources */,
+				CC7F0B4C2ED3EF3000CEBC64 /* MaratonaNoPulsoApp.swift in Sources */,
+				CC7F0B4D2ED3EF3000CEBC64 /* Models.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		CC7F0B1D2ED3E7D900CEBC64 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CC7F0B132ED3E7D800CEBC64 /* Watch-Maratona-No-Pulso Watch App */;
+			targetProxy = CC7F0B1C2ED3E7D900CEBC64 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		CC7F0B202ED3E7D900CEBC64 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = WRCB2YUTXL;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "A Maratona No Pulso";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.maratonanopulso.MaratonaNoPulso;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.maratonanopulso.MaratonaNoPulso.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.6;
+			};
+			name = Debug;
+		};
+		CC7F0B212ED3E7D900CEBC64 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = WRCB2YUTXL;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "A Maratona No Pulso";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.maratonanopulso.MaratonaNoPulso;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.maratonanopulso.MaratonaNoPulso.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.6;
+			};
+			name = Release;
+		};
 		CCBD4D822ED0072500DDE2A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -251,16 +479,27 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MaratonaNoPulso/MaratonaNoPulso.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = WRCB2YUTXL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MaratonaNoPulso/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "A Maratona No Pulso";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Precisamos acessar seus dados de saúde para criar treinos personalizados";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Precisamos salvar seus treinos no HealthKit";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Para que o AI Coach possa ouvir seus comandos e gerar seus treinos.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Precisamos reconhecer sua fala para criar treinos personalizados ";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -283,16 +522,27 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MaratonaNoPulso/MaratonaNoPulso.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = WRCB2YUTXL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MaratonaNoPulso/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "A Maratona No Pulso";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Precisamos acessar seus dados de saúde para criar treinos personalizados";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Precisamos salvar seus treinos no HealthKit";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Para que o AI Coach possa ouvir seus comandos e gerar seus treinos.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Precisamos reconhecer sua fala para criar treinos personalizados ";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -313,6 +563,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		CC7F0B1F2ED3E7D900CEBC64 /* Build configuration list for PBXNativeTarget "Watch-Maratona-No-Pulso Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CC7F0B202ED3E7D900CEBC64 /* Debug */,
+				CC7F0B212ED3E7D900CEBC64 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		CCBD4D742ED0072400DDE2A9 /* Build configuration list for PBXProject "MaratonaNoPulso" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
