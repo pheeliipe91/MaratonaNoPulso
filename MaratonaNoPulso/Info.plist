@@ -2,11 +2,26 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>processing</string>
-	</array>
-	<key>workww</key>
-	<string></string>
+    <key>NSHealthShareUsageDescription</key>
+    <string>Precisamos ler seus dados (passos, batimentos, energia) para a IA calibrar seu treino e evitar lesões.</string>
+    <key>NSHealthUpdateUsageDescription</key>
+    <string>Precisamos salvar os treinos gerados pela IA no seu histórico do App Saúde.</string>
+
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Usamos o microfone para você conversar com o Coach AI durante o planejamento.</string>
+    <key>NSSpeechRecognitionUsageDescription</key>
+    <string>Convertemos sua fala em texto para gerar treinos personalizados.</string>
+
+    <key>UIBackgroundModes</key>
+    <array>
+        <string>processing</string>
+        <string>remote-notification</string>
+    </array>
+    
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
+    </dict>
 </dict>
 </plist>

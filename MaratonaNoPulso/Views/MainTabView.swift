@@ -1,36 +1,42 @@
 import SwiftUI
 
 struct MainTabView: View {
+    // Estado para controlar qual aba está ativa
+    @State private var selectedTab = 0
+    
+    init() {
+        let appearance = UITabBarAppearance()
+        appearance.configureWithTransparentBackground()
+        appearance.backgroundColor = UIColor(Color.appBackground).withAlphaComponent(0.9)
+        UITabBar.appearance().standardAppearance = appearance
+        UITabBar.appearance().scrollEdgeAppearance = appearance
+    }
+    
     var body: some View {
-        // O TabView gerencia as diferentes abas do seu app
-        TabView {
-            // Aba 1: AI Coach
-            VoiceCoachView()
+        TabView(selection: $selectedTab) {
+            // Passamos o Binding para o Coach poder mudar a aba
+            VoiceCoachView(selectedTab: $selectedTab)
                 .tabItem {
-                    // Ícone e texto para a aba
                     Image(systemName: "waveform.path.ecg")
-                    Text("AI Coach")
+                    Text("Coach")
                 }
-
-            // Aba 2: Dashboard (uma tela temporária por enquanto)
-            Text("Tela do Dashboard")
+                .tag(0)
+            
+            DashboardView()
                 .tabItem {
                     Image(systemName: "chart.bar.xaxis")
                     Text("Dashboard")
                 }
-
-            // Aba 3: Mentores (uma tela temporária por enquanto)
-            Text("Tela dos Mentores")
+                .tag(1)
+            
+            LibraryView()
                 .tabItem {
-                    Image(systemName: "person.3.fill")
-                    Text("Mentores")
+                    Image(systemName: "books.vertical")
+                    Text("Biblioteca")
                 }
+                .tag(2)
         }
-        // Para garantir que os ícones fiquem com a cor correta no modo escuro
-        .accentColor(.white)
+        .accentColor(Color.neonGreen)
+        .preferredColorScheme(.dark)
     }
-}
-
-#Preview {
-    MainTabView()
 }

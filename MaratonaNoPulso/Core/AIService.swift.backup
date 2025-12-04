@@ -1,0 +1,550 @@
+import Foundation
+import Combine
+
+// MARK: - Estruturas da "Science Engine"
+struct WeekBlueprint: Codable {
+    let focus: String
+    let sessions: [SessionBlueprint]
+}
+
+struct SessionBlueprint: Codable {
+    let day: String
+    let type: String
+    let targetDistanceKm: Double
+    let targetDurationMin: Int
+    let intensityConstraints: String
+}
+
+// MARK: - Estrutura da Análise Pós-Treino
+struct PostWorkoutAnalysis: Codable {
+    let analysisSummary: String
+    let recoveryScore: String
+    let suggestedAction: String
+    let coachComment: String
+}
+
+class AIService: ObservableObject {
+    // MARK: - Outputs
+    @Published var suggestedWorkouts: [AIWorkoutPlan] = []
+    @Published var suggestedRoadmap: [CyclePhase] = []
+    @Published var generatedSegments: [WorkoutSegment]?
+    
+    // NOVO: Resultado da análise pós-treino
+    @Published var postWorkoutAnalysis: PostWorkoutAnalysis?
+    
+    // MARK: - Estado
+    @Published var isLoading: Bool = false
+    @Published var errorMessage: String?
+    
+    private let openAIAPIKey = Secrets.openAIAPIKey
+    private let endpoint = "https://api.openai.com/v1/chat/completions"
+    
+    // Armazena assinaturas locais para checagem pós-IA
+    private var localExistingSignatures: Set<WorkoutSignature> = []
+
+    // MARK: - 1. GERAÇÃO DE SEMANA (COM CONTEXTO DE SAÚDE)
+    func generateWeekPlan(for user: AIUserProfile, healthContext: String, instruction: String? = nil, existingPlans: [DailyPlan] = []) {
+        guard let _ = URL(string: endpoint) else { return }
+        
+        DispatchQueue.main.async {
+            self.isLoading = true
+            self.errorMessage = nil
+            self.suggestedWorkouts = []
+            self.suggestedRoadmap = []
+        }
+        
+        // 1. CARREGAR ASSINATURAS EXISTENTES (Blindagem Nível Código)
+        self.localExistingSignatures = Set(existingPlans.map { $0.signature })
+        
+        // 2. CAMADA CIENTÍFICA: Calcular Carga e Estrutura
+        let blueprint = calculateWeekBlueprint(for: user)
+        let blueprintJson = blueprint.safeJsonString // Usa nosso helper seguro
+        
+        // 3. CAMADA DE CONTEXTO PARA IA
+        let existingTitles = existingPlans.map { $0.title }.joined(separator: ", ")
+        
+        let systemPersona = """
+        Você é o 'Coach Científico' (Expert em Fisiologia e HealthKit).
+        Sua função é detalhar um blueprint de treino, adaptando a narrativa ao histórico recente de saúde do atleta.
+        
+        REGRAS DE OURO (HARD CONSTRAINTS):
+        1. OBEDEÇA O BLUEPRINT: Use EXATAMENTE os valores de 'targetDistanceKm' e 'targetDurationMin'. Não altere o volume.
+        2. ANALISE A SAÚDE: Leia o 'CONTEXTO DE SAÚDE' abaixo. Se o atleta correu muito ontem, mencione recuperação no 'workoutReasoning'.
+        3. CRIATIVIDADE CONTROLADA: Crie títulos únicos (nunca repita os listados).
+        4. ANTI-ALUCINAÇÃO: Siga a 'intensityConstraints' do blueprint rigorosamente.
+        """
+        
+        let prompt = """
+        DADOS DO ATLETA:
+        - Nível: \(user.experienceLevel)
+        - Objetivo: "\(instruction ?? user.goal)"
+        
+        CONTEXTO DE SAÚDE (HEALTHKIT RECENTE):
+        \(healthContext)
+        
+        BLUEPRINT CIENTÍFICO (ESTRUTURA IMUTÁVEL):
+        \(blueprintJson)
+        
+        TÍTULOS JÁ USADOS (PROIBIDO REPETIR):
+        [\(existingTitles)]
+        
+        TAREFA:
+        Para cada sessão do blueprint, gere um objeto 'AIWorkoutPlan'.
+        - Preencha 'distance' e 'duration' com os valores exatos do blueprint.
+        - No campo 'workoutReasoning', explique a escolha baseada no histórico de saúde (ex: "Como você correu X km ontem...").
+        
+        SAÍDA JSON:
+        {
+            "roadmap": [ { "phaseName": "Base", "duration": "Semana Atual", "focus": "\(blueprint.focus)" } ],
+            "workouts": [
+                {
+                    "title": "Nome Técnico",
+                    "suggestedDay": "Copiar do Blueprint",
+                    "cyclePhase": "Base",
+                    "cycleTarget": "\(user.goal)",
+                    "distance": 0.0,
+                    "duration": 0,
+                    "type": "Running",
+                    "rawInstructionText": "Instrução completa...",
+                    "workoutReasoning": "Justificativa conectada ao HealthKit...",
+                    "safetyWarning": "Aviso de segurança...",
+                    "zoneFocus": "Z2/Z4...",
+                    "difficultyRating": "Baixa/Média"
+                }
+            ]
+        }
+        """
+        
+        performOpenAIRequest(system: systemPersona, prompt: prompt, maxTokens: 4000) { data in
+            self.handleWeekResponse(data: data)
+        }
+    }
+    
+    // MARK: - ENGINE CIENTÍFICA (Lógica Swift Pura)
+    private func calculateWeekBlueprint(for user: AIUserProfile) -> WeekBlueprint {
+        // Regra de Volume Inicial
+        var safeVolume: Double
+        
+        // TRATAMENTO ESPECIAL PARA INICIANTE ZERO KM
+        if user.experienceLevel == "Iniciante" && user.currentDistance <= 1.0 {
+            safeVolume = 6.0 // Teto rígido para quem está saindo do sofá (ex: 3x 2km)
+        } else {
+            let baseVolume = user.currentDistance > 0 ? user.currentDistance : 15.0
+            safeVolume = min(baseVolume * 1.10, baseVolume + 4.0) // Regra dos 10%
+        }
+        
+        // Distribuição
+        let days = max(1, user.daysPerWeek)
+        let longRunDist = (safeVolume * 0.30).rounded()
+        let remainingDist = safeVolume - longRunDist
+        let easyDist = (remainingDist / Double(max(1, days - 1))).rounded()
+        
+        var sessions: [SessionBlueprint] = []
+        
+        // Sessão 1: Longo (Fim de semana)
+        // Pace estimado lento para iniciantes (8min/km) vs avançados (5min/km) para calcular duração
+        let paceEst = user.experienceLevel == "Iniciante" ? 9.0 : 6.0
+        
+        sessions.append(SessionBlueprint(
+            day: "Sábado",
+            type: "Long Run",
+            targetDistanceKm: longRunDist,
+            targetDurationMin: Int(longRunDist * paceEst),
+            intensityConstraints: "Z2 Strict / Aeróbico"
+        ))
+        
+        // Sessões Extras
+        if days > 1 {
+            for i in 0..<(days - 1) {
+                let isQualityDay = (user.experienceLevel != "Iniciante" && i == 0)
+                let type = isQualityDay ? "Intervals" : "Easy Run"
+                
+                // CONSTRAINT DE INICIANTE: WALK/RUN OBRIGATÓRIO
+                let constraint = (user.experienceLevel == "Iniciante") ? "Walk/Run Method (Galloway)" : (isQualityDay ? "Threshold Z4" : "Recovery Z1")
+                
+                sessions.append(SessionBlueprint(
+                    day: (i == 0) ? "Terça" : "Quinta",
+                    type: type,
+                    targetDistanceKm: easyDist,
+                    targetDurationMin: Int(easyDist * paceEst),
+                    intensityConstraints: constraint
+                ))
+            }
+        }
+        
+        return WeekBlueprint(focus: "Construção de Base", sessions: sessions)
+    }
+    
+    // MARK: - 2. GERAÇÃO MICRO (CORRIGIDO E ROBUSTO)
+    func generateDetailedSegments(for instruction: String, title: String, phase: String, user: AIUserProfile) {
+        guard let _ = URL(string: endpoint) else { return }
+        
+        DispatchQueue.main.async {
+            self.isLoading = true
+            self.errorMessage = nil
+            self.generatedSegments = nil
+        }
+        
+        // 🔥 DEFINIÇÃO ESTRITA DO SCHEMA JSON PARA A IA SEGUIR
+        let strictSchema = """
+        {
+            "segments": [
+                {
+                    "role": "String (Obrigatório: 'warmup', 'work', 'recovery', ou 'cooldown')",
+                    "goalType": "String (Obrigatório: 'time', 'distance', ou 'open')",
+                    "durationMinutes": "Double (Opcional: Apenas se goalType='time'. Ex: 10.0)",
+                    "distanceKm": "Double (Opcional: Apenas se goalType='distance'. Ex: 1.5)",
+                    "intensity": "String (Ex: 'Z2', 'Z4', 'Leve', 'Forte')",
+                    "reps": "Int (Opcional: Se for uma repetição, ex: 1)",
+                    "targetPaceMin": "String (Opcional: Ex: '4:30')",
+                    "targetPaceMax": "String (Opcional: Ex: '5:00')"
+                }
+            ]
+        }
+        """
+        
+        let systemPersona = """
+        Você é uma Engine de Estruturação de Treinos para Apple Watch.
+        Sua única função é converter texto descritivo em um ARRAY JSON estrito que o Swift possa decodificar.
+        
+        REGRAS CRÍTICAS:
+        1. Use EXATAMENTE as chaves do schema JSON abaixo. Não invente campos.
+        2. 'role' deve ser APENAS: "warmup", "work", "recovery", "cooldown".
+        3. 'goalType' deve ser APENAS: "time", "distance", "open".
+        4. Converta todos os números para Double ou Int conforme o schema.
+        5. Se a instrução for "3x 1km", crie 3 pares de segmentos (work + recovery) ou use o campo 'reps' se o app suportar blocos (neste caso, gere os segmentos linearmente explodidos para garantir compatibilidade).
+        
+        SCHEMA OBRIGATÓRIO:
+        \(strictSchema)
+        """
+        
+        let prompt = """
+        TREINO: "\(title)"
+        FASE: \(phase)
+        INSTRUÇÃO COMPLETA: "\(instruction)"
+        
+        TAREFA: Quebre este treino em segmentos lógicos (Aquecimento -> Parte Principal -> Desaquecimento).
+        """
+        
+        performOpenAIRequest(system: systemPersona, prompt: prompt, maxTokens: 2500) { data in
+            self.handleMicroResponse(data: data)
+        }
+    }
+    
+    // MARK: - 3. INTELIGÊNCIA PÓS-TREINO (NOVO)
+    func analyzePostWorkout(workoutData: String, userFeedback: String, painStatus: String) {
+        guard let _ = URL(string: endpoint) else { return }
+        
+        DispatchQueue.main.async {
+            self.isLoading = true
+            self.errorMessage = nil
+            self.postWorkoutAnalysis = nil // Limpa análise anterior
+        }
+        
+        let systemPersona = """
+        Você é um Fisiologista do Esporte analisando o pós-treino de um atleta.
+        Seu objetivo é cruzar os dados brutos do treino com o feedback subjetivo (sensação/dor) para decidir os próximos passos.
+        """
+        
+        let prompt = """
+        DADOS DO TREINO REALIZADO (HealthKit):
+        \(workoutData)
+        
+        FEEDBACK DO ATLETA:
+        - Sensação (RPE): \(userFeedback)
+        - Status de Dor/Lesão: \(painStatus)
+        
+        ANÁLISE NECESSÁRIA:
+        1. O atleta cumpriu o objetivo?
+        2. Há sinais de overtraining ou lesão?
+        3. O plano futuro precisa de ajuste? (Ex: Se houve dor, sugerir descanso amanhã).
+        
+        SAÍDA JSON:
+        {
+            "analysisSummary": "Texto curto e direto analisando a performance.",
+            "recoveryScore": "0 a 100 (Baseado no esforço)",
+            "suggestedAction": "Manter Plano" ou "Alterar para Recuperação" ou "Descanso Total",
+            "coachComment": "Comentário motivacional ou técnico curto."
+        }
+        """
+        
+        performOpenAIRequest(system: systemPersona, prompt: prompt, maxTokens: 1000) { data in
+            self.handlePostWorkoutResponse(data: data)
+        }
+    }
+
+    // MARK: - Helpers de API e Parsing
+    
+    private func performOpenAIRequest(system: String, prompt: String, maxTokens: Int, completion: @escaping (Data) -> Void) {
+        guard let url = URL(string: endpoint) else { reportError("URL inválida."); return }
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("Bearer \(openAIAPIKey)", forHTTPHeaderField: "Authorization")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.timeoutInterval = 60
+        
+        let requestBody: [String: Any] = [
+            "model": "gpt-4o",
+            "messages": [["role": "system", "content": system], ["role": "user", "content": prompt]],
+            "temperature": 0.5,
+            "max_tokens": maxTokens,
+            "response_format": ["type": "json_object"]
+        ]
+        
+        do { request.httpBody = try JSONSerialization.data(withJSONObject: requestBody) } catch {}
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            DispatchQueue.main.async { self.isLoading = false }
+            if let error = error { self.reportError("Erro: \(error.localizedDescription)"); return }
+            guard let data = data else { return }
+            completion(data)
+        }.resume()
+    }
+    
+    // MARK: - Response Handlers
+    
+    private func handleWeekResponse(data: Data) {
+        struct ResponseWrapper: Decodable {
+            let roadmap: [CyclePhase]?
+            let workouts: [AIWorkoutPlan]
+        }
+        struct OpenAIResponse: Decodable {
+            struct Choice: Decodable {
+                struct Message: Decodable {
+                    let content: String
+                }
+                let message: Message
+            }
+            let choices: [Choice]
+        }
+        
+        do {
+            let decoded = try JSONDecoder().decode(OpenAIResponse.self, from: data)
+            guard let content = decoded.choices.first?.message.content else {
+                reportError("Resposta vazia da API")
+                return
+            }
+            
+            // Limpa possíveis artefatos de markdown
+            let cleanJson = content
+                .replacingOccurrences(of: "```json", with: "")
+                .replacingOccurrences(of: "```", with: "")
+                .trimmingCharacters(in: .whitespacesAndNewlines)
+            
+            guard let jsonData = cleanJson.data(using: .utf8) else {
+                reportError("Falha ao converter JSON")
+                return
+            }
+            
+            let wrapper = try JSONDecoder().decode(ResponseWrapper.self, from: jsonData)
+            
+            // FILTRO ANTI-DUPLICAÇÃO (Blindagem Nível Código)
+            let uniqueWorkouts = wrapper.workouts.filter { workout in
+                !self.localExistingSignatures.contains(workout.signature)
+            }
+            
+            DispatchQueue.main.async {
+                self.suggestedRoadmap = wrapper.roadmap ?? []
+                self.suggestedWorkouts = uniqueWorkouts
+                
+                if uniqueWorkouts.count < wrapper.workouts.count {
+                    print("⚠️ FILTRO ATIVO: \(wrapper.workouts.count - uniqueWorkouts.count) treinos duplicados removidos")
+                }
+            }
+            
+        } catch {
+            reportError("Erro ao decodificar: \(error.localizedDescription)")
+        }
+    }
+    
+    private func handleMicroResponse(data: Data) {
+        struct SegmentWrapper: Decodable {
+            let segments: [WorkoutSegment]
+        }
+        struct OpenAIResponse: Decodable {
+            struct Choice: Decodable {
+                struct Message: Decodable {
+                    let content: String
+                }
+                let message: Message
+            }
+            let choices: [Choice]
+        }
+        
+        do {
+            let decoded = try JSONDecoder().decode(OpenAIResponse.self, from: data)
+            guard let content = decoded.choices.first?.message.content else {
+                reportError("Resposta vazia da API")
+                return
+            }
+            
+            // Limpa possíveis artefatos de markdown
+            let cleanJson = content
+                .replacingOccurrences(of: "```json", with: "")
+                .replacingOccurrences(of: "```", with: "")
+                .trimmingCharacters(in: .whitespacesAndNewlines)
+            
+            guard let jsonData = cleanJson.data(using: .utf8) else {
+                reportError("Falha ao converter JSON dos segmentos")
+                return
+            }
+            
+            let wrapper = try JSONDecoder().decode(SegmentWrapper.self, from: jsonData)
+            
+            DispatchQueue.main.async {
+                self.generatedSegments = wrapper.segments
+                print("✅ \(wrapper.segments.count) segmentos gerados com sucesso")
+            }
+            
+        } catch {
+            reportError("Erro ao decodificar segmentos: \(error.localizedDescription)")
+        }
+    }
+    
+    private func handlePostWorkoutResponse(data: Data) {
+        struct OpenAIResponse: Decodable {
+            struct Choice: Decodable {
+                struct Message: Decodable {
+                    let content: String
+                }
+                let message: Message
+            }
+            let choices: [Choice]
+        }
+        
+        do {
+            let decoded = try JSONDecoder().decode(OpenAIResponse.self, from: data)
+            guard let content = decoded.choices.first?.message.content else {
+                reportError("Resposta vazia da API")
+                return
+            }
+            
+            // Limpa possíveis artefatos de markdown
+            let cleanJson = content
+                .replacingOccurrences(of: "```json", with: "")
+                .replacingOccurrences(of: "```", with: "")
+                .trimmingCharacters(in: .whitespacesAndNewlines)
+            
+            guard let jsonData = cleanJson.data(using: .utf8) else {
+                reportError("Falha ao converter JSON da análise")
+                return
+            }
+            
+            let analysis = try JSONDecoder().decode(PostWorkoutAnalysis.self, from: jsonData)
+            
+            DispatchQueue.main.async {
+                self.postWorkoutAnalysis = analysis
+                print("✅ Análise pós-treino concluída")
+            }
+            
+        } catch {
+            reportError("Erro ao decodificar análise: \(error.localizedDescription)")
+        }
+    }
+    
+    // MARK: - Error Handling
+    
+    private func reportError(_ message: String) {
+        DispatchQueue.main.async {
+            self.errorMessage = message
+            self.isLoading = false
+            print("❌ AIService Error: \(message)")
+        }
+    }
+}
+
+// MARK: - Extensions Auxiliares
+
+extension WeekBlueprint {
+    var safeJsonString: String {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+        
+        guard let data = try? encoder.encode(self),
+              let jsonString = String(data: data, encoding: .utf8) else {
+            return "{\"error\": \"Falha ao serializar blueprint\"}"
+        }
+        
+        return jsonString
+    }
+}
+
+// MARK: - Estruturas Auxiliares Necessárias
+// (Adicione essas se ainda não existirem no projeto)
+
+struct AIWorkoutPlan: Codable, Identifiable {
+    let id = UUID()
+    let title: String
+    let suggestedDay: String
+    let cyclePhase: String
+    let cycleTarget: String
+    let distance: Double
+    let duration: Int
+    let type: String
+    let rawInstructionText: String
+    let workoutReasoning: String
+    let safetyWarning: String
+    let zoneFocus: String
+    let difficultyRating: String
+    
+    var signature: WorkoutSignature {
+        WorkoutSignature(
+            day: suggestedDay,
+            distance: distance,
+            duration: duration
+        )
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case title, suggestedDay, cyclePhase, cycleTarget
+        case distance, duration, type
+        case rawInstructionText, workoutReasoning
+        case safetyWarning, zoneFocus, difficultyRating
+    }
+}
+
+struct WorkoutSignature: Hashable, Codable {
+    let day: String
+    let distance: Double
+    let duration: Int
+}
+
+struct CyclePhase: Codable, Identifiable {
+    let id = UUID()
+    let phaseName: String
+    let duration: String
+    let focus: String
+    
+    enum CodingKeys: String, CodingKey {
+        case phaseName, duration, focus
+    }
+}
+
+struct WorkoutSegment: Codable, Identifiable {
+    let id = UUID()
+    let role: String // warmup, work, recovery, cooldown
+    let goalType: String // time, distance, open
+    let durationMinutes: Double?
+    let distanceKm: Double?
+    let intensity: String
+    let reps: Int?
+    let targetPaceMin: String?
+    let targetPaceMax: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case role, goalType, durationMinutes, distanceKm
+        case intensity, reps, targetPaceMin, targetPaceMax
+    }
+}
+
+struct AIUserProfile {
+    let experienceLevel: String // "Iniciante", "Intermediário", "Avançado"
+    let goal: String
+    let currentDistance: Double // km por semana atual
+    let daysPerWeek: Int
+}
+
+struct DailyPlan {
+    let title: String
+    let signature: WorkoutSignature
+}

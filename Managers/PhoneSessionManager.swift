@@ -59,10 +59,18 @@ class PhoneSessionManager: NSObject, ObservableObject, WCSessionDelegate {
     func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
         print("iPhone: Mensagem recebida do Watch: \(message)")
         
+        // ✅ Validação de dados recebidos
+        guard !message.isEmpty else {
+            print("iPhone: Mensagem vazia ignorada")
+            return
+        }
+        
         if let confirmation = message["confirmation"] as? String {
+            // ✅ Sanitização básica
+            let sanitized = confirmation.prefix(200) // Limita tamanho
             DispatchQueue.main.async {
-                self.lastConfirmation = confirmation
-                print("iPhone: Confirmação recebida - \(confirmation)")
+                self.lastConfirmation = String(sanitized)
+                print("iPhone: Confirmação recebida - \(sanitized)")
             }
         }
     }

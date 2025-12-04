@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CC0C35372ED808A800500C51 /* WorkoutPlanService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0C35362ED808A800500C51 /* WorkoutPlanService.swift */; };
+		CC0C35392ED93F4F00500C51 /* ProfileSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0C35382ED93F4F00500C51 /* ProfileSettingsView.swift */; };
+		CC0C353B2ED96A3000500C51 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0C353A2ED96A3000500C51 /* NotificationManager.swift */; };
+		CC0C353D2EDA152B00500C51 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0C353C2EDA152B00500C51 /* Extensions.swift */; };
+		CC0C353F2EDD620800500C51 /* PostWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0C353E2EDD620800500C51 /* PostWorkoutView.swift */; };
 		CC7F0B1E2ED3E7D900CEBC64 /* Watch-Maratona-No-Pulso Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = CC7F0B142ED3E7D800CEBC64 /* Watch-Maratona-No-Pulso Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		CC7F0B452ED3EF3000CEBC64 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC7F0B3C2ED3EF3000CEBC64 /* Assets.xcassets */; };
 		CC7F0B462ED3EF3000CEBC64 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7F0B3D2ED3EF3000CEBC64 /* AudioManager.swift */; };
@@ -22,6 +27,26 @@
 		CC7F0B782ED4051600CEBC64 /* WeeklyPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7F0B762ED4051600CEBC64 /* WeeklyPlanView.swift */; };
 		CC7F0B8D2ED41C5500CEBC64 /* WorkoutKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7F0B8C2ED41C5500CEBC64 /* WorkoutKitManager.swift */; };
 		CC7F0B922ED487AA00CEBC64 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7F0B912ED487AA00CEBC64 /* Secrets.swift */; };
+		CC7F0B942ED4ACD600CEBC64 /* DataModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7F0B932ED4ACD600CEBC64 /* DataModels.swift */; };
+		CC7F0B962ED532C500CEBC64 /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7F0B952ED532C500CEBC64 /* LibraryView.swift */; };
+		CC7F0B982ED53C5C00CEBC64 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7F0B972ED53C5C00CEBC64 /* DashboardView.swift */; };
+		CC7F0B9C2ED54A0200CEBC64 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7F0B9B2ED54A0200CEBC64 /* OnboardingView.swift */; };
+		CCA156652ED55448008FB04C /* Color+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA156642ED55448008FB04C /* Color+Extensions.swift */; };
+		CCA156672ED57337008FB04C /* FileManagerHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA156662ED57337008FB04C /* FileManagerHelpers.swift */; };
+		CCA156692ED57372008FB04C /* ImportPlanSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA156682ED57372008FB04C /* ImportPlanSheet.swift */; };
+		CCB2A5CD2EE11F5E00ABF51E /* CORREÇÕES_HIERARQUIA.md in Resources */ = {isa = PBXBuildFile; fileRef = CCB2A5CC2EE11F5E00ABF51E /* CORREÇÕES_HIERARQUIA.md */; };
+		CCB2A5CF2EE1264300ABF51E /* CORREÇÃO_PACE_E_CONTEXTO.md in Resources */ = {isa = PBXBuildFile; fileRef = CCB2A5CE2EE1264300ABF51E /* CORREÇÃO_PACE_E_CONTEXTO.md */; };
+		CCB2A5D12EE1268A00ABF51E /* DIAGNÓSTICO_SEMANAS_FALTANDO.md in Resources */ = {isa = PBXBuildFile; fileRef = CCB2A5D02EE1268A00ABF51E /* DIAGNÓSTICO_SEMANAS_FALTANDO.md */; };
+		CCB2A5D32EE126D300ABF51E /* PLANO_DE_AÇÃO_COMPLETO.md in Resources */ = {isa = PBXBuildFile; fileRef = CCB2A5D22EE126D300ABF51E /* PLANO_DE_AÇÃO_COMPLETO.md */; };
+		CCB2A5D52EE128AF00ABF51E /* STATUS_BRIDGE_AI.md in Resources */ = {isa = PBXBuildFile; fileRef = CCB2A5D42EE128AF00ABF51E /* STATUS_BRIDGE_AI.md */; };
+		CCB2A5D72EE12A3A00ABF51E /* CORREÇÃO_ERROS_COMPILAÇÃO.md in Resources */ = {isa = PBXBuildFile; fileRef = CCB2A5D62EE12A3A00ABF51E /* CORREÇÃO_ERROS_COMPILAÇÃO.md */; };
+		CCB2A5D92EE12A9000ABF51E /* RESUMO_FINAL_CORREÇÕES.md in Resources */ = {isa = PBXBuildFile; fileRef = CCB2A5D82EE12A9000ABF51E /* RESUMO_FINAL_CORREÇÕES.md */; };
+		CCB2A5DB2EE12B4100ABF51E /* CORREÇÃO_ERROS_AISERVICE.md in Resources */ = {isa = PBXBuildFile; fileRef = CCB2A5DA2EE12B4100ABF51E /* CORREÇÃO_ERROS_AISERVICE.md */; };
+		CCB2A5DD2EE12D4600ABF51E /* CORREÇÃO_GERAÇÃO_SEMANAS_COMPLETAS.md in Resources */ = {isa = PBXBuildFile; fileRef = CCB2A5DC2EE12D4600ABF51E /* CORREÇÃO_GERAÇÃO_SEMANAS_COMPLETAS.md */; };
+		CCB2A5DF2EE131E100ABF51E /* CORREÇÃO_PACE_CIENTÍFICO.md in Resources */ = {isa = PBXBuildFile; fileRef = CCB2A5DE2EE131E100ABF51E /* CORREÇÃO_PACE_CIENTÍFICO.md */; };
+		CCB2A5E12EE1344C00ABF51E /* INSTRUÇÕES_TESTE_FINAL.md in Resources */ = {isa = PBXBuildFile; fileRef = CCB2A5E02EE1344C00ABF51E /* INSTRUÇÕES_TESTE_FINAL.md */; };
+		CCFD331A2EDEADA5007CDCFB /* HIERARCHICAL_IMPROVEMENTS.md in Resources */ = {isa = PBXBuildFile; fileRef = CCFD33192EDEADA5007CDCFB /* HIERARCHICAL_IMPROVEMENTS.md */; };
+		CCFD331C2EDEB354007CDCFB /* LIBRARY_HIERARCHY_FIX.md in Resources */ = {isa = PBXBuildFile; fileRef = CCFD331B2EDEB354007CDCFB /* LIBRARY_HIERARCHY_FIX.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +74,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		CC0C35362ED808A800500C51 /* WorkoutPlanService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutPlanService.swift; sourceTree = "<group>"; };
+		CC0C35382ED93F4F00500C51 /* ProfileSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsView.swift; sourceTree = "<group>"; };
+		CC0C353A2ED96A3000500C51 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		CC0C353C2EDA152B00500C51 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		CC0C353E2EDD620800500C51 /* PostWorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostWorkoutView.swift; sourceTree = "<group>"; };
 		CC7F0B142ED3E7D800CEBC64 /* Watch-Maratona-No-Pulso Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Watch-Maratona-No-Pulso Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC7F0B3B2ED3EF3000CEBC64 /* AIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIService.swift; sourceTree = "<group>"; };
 		CC7F0B3C2ED3EF3000CEBC64 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -65,7 +95,34 @@
 		CC7F0B762ED4051600CEBC64 /* WeeklyPlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyPlanView.swift; sourceTree = "<group>"; };
 		CC7F0B8C2ED41C5500CEBC64 /* WorkoutKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutKitManager.swift; sourceTree = "<group>"; };
 		CC7F0B912ED487AA00CEBC64 /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
+		CC7F0B932ED4ACD600CEBC64 /* DataModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModels.swift; sourceTree = "<group>"; };
+		CC7F0B952ED532C500CEBC64 /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
+		CC7F0B972ED53C5C00CEBC64 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		CC7F0B9B2ED54A0200CEBC64 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		CCA156642ED55448008FB04C /* Color+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extensions.swift"; sourceTree = "<group>"; };
+		CCA156662ED57337008FB04C /* FileManagerHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerHelpers.swift; sourceTree = "<group>"; };
+		CCA156682ED57372008FB04C /* ImportPlanSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportPlanSheet.swift; sourceTree = "<group>"; };
+		CCB2A5CC2EE11F5E00ABF51E /* CORREÇÕES_HIERARQUIA.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "CORREÇÕES_HIERARQUIA.md"; sourceTree = "<group>"; };
+		CCB2A5CE2EE1264300ABF51E /* CORREÇÃO_PACE_E_CONTEXTO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "CORREÇÃO_PACE_E_CONTEXTO.md"; sourceTree = "<group>"; };
+		CCB2A5D02EE1268A00ABF51E /* DIAGNÓSTICO_SEMANAS_FALTANDO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "DIAGNÓSTICO_SEMANAS_FALTANDO.md"; sourceTree = "<group>"; };
+		CCB2A5D22EE126D300ABF51E /* PLANO_DE_AÇÃO_COMPLETO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "PLANO_DE_AÇÃO_COMPLETO.md"; sourceTree = "<group>"; };
+		CCB2A5D42EE128AF00ABF51E /* STATUS_BRIDGE_AI.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = STATUS_BRIDGE_AI.md; sourceTree = "<group>"; };
+		CCB2A5D62EE12A3A00ABF51E /* CORREÇÃO_ERROS_COMPILAÇÃO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "CORREÇÃO_ERROS_COMPILAÇÃO.md"; sourceTree = "<group>"; };
+		CCB2A5D82EE12A9000ABF51E /* RESUMO_FINAL_CORREÇÕES.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "RESUMO_FINAL_CORREÇÕES.md"; sourceTree = "<group>"; };
+		CCB2A5DA2EE12B4100ABF51E /* CORREÇÃO_ERROS_AISERVICE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "CORREÇÃO_ERROS_AISERVICE.md"; sourceTree = "<group>"; };
+		CCB2A5DC2EE12D4600ABF51E /* CORREÇÃO_GERAÇÃO_SEMANAS_COMPLETAS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "CORREÇÃO_GERAÇÃO_SEMANAS_COMPLETAS.md"; sourceTree = "<group>"; };
+		CCB2A5DE2EE131E100ABF51E /* CORREÇÃO_PACE_CIENTÍFICO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "CORREÇÃO_PACE_CIENTÍFICO.md"; sourceTree = "<group>"; };
+		CCB2A5E02EE1344C00ABF51E /* INSTRUÇÕES_TESTE_FINAL.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "INSTRUÇÕES_TESTE_FINAL.md"; sourceTree = "<group>"; };
 		CCBD4D792ED0072400DDE2A9 /* MaratonaNoPulso.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MaratonaNoPulso.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CCFD33122EDE8F59007CDCFB /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		CCFD33132EDE8F7F007CDCFB /* .gitignore 2 */ = {isa = PBXFileReference; lastKnownFileType = text; path = ".gitignore 2"; sourceTree = "<group>"; };
+		CCFD33142EDE8FB0007CDCFB /* PRODUCTION_CHECKLIST.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = PRODUCTION_CHECKLIST.md; sourceTree = "<group>"; };
+		CCFD33152EDE8FD9007CDCFB /* CORRECTIONS_REPORT.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CORRECTIONS_REPORT.md; sourceTree = "<group>"; };
+		CCFD33162EDE9007007CDCFB /* XCODE_SETUP.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = XCODE_SETUP.md; sourceTree = "<group>"; };
+		CCFD33172EDE91ED007CDCFB /* PERSONAL_TEST_SETUP.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = PERSONAL_TEST_SETUP.md; sourceTree = "<group>"; };
+		CCFD33182EDE9232007CDCFB /* QUICK_START.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = QUICK_START.md; sourceTree = "<group>"; };
+		CCFD33192EDEADA5007CDCFB /* HIERARCHICAL_IMPROVEMENTS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = HIERARCHICAL_IMPROVEMENTS.md; sourceTree = "<group>"; };
+		CCFD331B2EDEB354007CDCFB /* LIBRARY_HIERARCHY_FIX.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = LIBRARY_HIERARCHY_FIX.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -121,9 +178,25 @@
 				CC7F0B8C2ED41C5500CEBC64 /* WorkoutKitManager.swift */,
 				CC7F0B3F2ED3EF3000CEBC64 /* HealthKitManager.swift */,
 				CC7F0B3B2ED3EF3000CEBC64 /* AIService.swift */,
+				CC0C353E2EDD620800500C51 /* PostWorkoutView.swift */,
 				CC7F0B3D2ED3EF3000CEBC64 /* AudioManager.swift */,
 				CC7F0B912ED487AA00CEBC64 /* Secrets.swift */,
 				CC7F0B422ED3EF3000CEBC64 /* Models.swift */,
+				CC7F0B932ED4ACD600CEBC64 /* DataModels.swift */,
+				CCA156662ED57337008FB04C /* FileManagerHelpers.swift */,
+				CC0C35362ED808A800500C51 /* WorkoutPlanService.swift */,
+				CC0C353A2ED96A3000500C51 /* NotificationManager.swift */,
+				CC0C353C2EDA152B00500C51 /* Extensions.swift */,
+				CCFD33192EDEADA5007CDCFB /* HIERARCHICAL_IMPROVEMENTS.md */,
+				CCB2A5CC2EE11F5E00ABF51E /* CORREÇÕES_HIERARQUIA.md */,
+				CCB2A5CE2EE1264300ABF51E /* CORREÇÃO_PACE_E_CONTEXTO.md */,
+				CCB2A5D02EE1268A00ABF51E /* DIAGNÓSTICO_SEMANAS_FALTANDO.md */,
+				CCB2A5D22EE126D300ABF51E /* PLANO_DE_AÇÃO_COMPLETO.md */,
+				CCB2A5D42EE128AF00ABF51E /* STATUS_BRIDGE_AI.md */,
+				CCB2A5DA2EE12B4100ABF51E /* CORREÇÃO_ERROS_AISERVICE.md */,
+				CCB2A5DC2EE12D4600ABF51E /* CORREÇÃO_GERAÇÃO_SEMANAS_COMPLETAS.md */,
+				CCB2A5DE2EE131E100ABF51E /* CORREÇÃO_PACE_CIENTÍFICO.md */,
+				CCB2A5E02EE1344C00ABF51E /* INSTRUÇÕES_TESTE_FINAL.md */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -144,6 +217,15 @@
 				CC7F0B402ED3EF3000CEBC64 /* MainTabView.swift */,
 				CC7F0B432ED3EF3000CEBC64 /* VoiceCoachView.swift */,
 				CC7F0B762ED4051600CEBC64 /* WeeklyPlanView.swift */,
+				CC7F0B952ED532C500CEBC64 /* LibraryView.swift */,
+				CC7F0B972ED53C5C00CEBC64 /* DashboardView.swift */,
+				CC7F0B9B2ED54A0200CEBC64 /* OnboardingView.swift */,
+				CCA156642ED55448008FB04C /* Color+Extensions.swift */,
+				CCA156682ED57372008FB04C /* ImportPlanSheet.swift */,
+				CC0C35382ED93F4F00500C51 /* ProfileSettingsView.swift */,
+				CCFD331B2EDEB354007CDCFB /* LIBRARY_HIERARCHY_FIX.md */,
+				CCB2A5D62EE12A3A00ABF51E /* CORREÇÃO_ERROS_COMPILAÇÃO.md */,
+				CCB2A5D82EE12A9000ABF51E /* RESUMO_FINAL_CORREÇÕES.md */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -154,6 +236,13 @@
 				CC7F0B442ED3EF3000CEBC64 /* MaratonaNoPulso */,
 				CC7F0B232ED3EC6700CEBC64 /* Managers */,
 				CCBD4D7A2ED0072400DDE2A9 /* Products */,
+				CCFD33122EDE8F59007CDCFB /* Logger.swift */,
+				CCFD33132EDE8F7F007CDCFB /* .gitignore 2 */,
+				CCFD33142EDE8FB0007CDCFB /* PRODUCTION_CHECKLIST.md */,
+				CCFD33152EDE8FD9007CDCFB /* CORRECTIONS_REPORT.md */,
+				CCFD33162EDE9007007CDCFB /* XCODE_SETUP.md */,
+				CCFD33172EDE91ED007CDCFB /* PERSONAL_TEST_SETUP.md */,
+				CCFD33182EDE9232007CDCFB /* QUICK_START.md */,
 			);
 			sourceTree = "<group>";
 		};
@@ -262,7 +351,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CCFD331A2EDEADA5007CDCFB /* HIERARCHICAL_IMPROVEMENTS.md in Resources */,
+				CCB2A5DD2EE12D4600ABF51E /* CORREÇÃO_GERAÇÃO_SEMANAS_COMPLETAS.md in Resources */,
+				CCB2A5D72EE12A3A00ABF51E /* CORREÇÃO_ERROS_COMPILAÇÃO.md in Resources */,
+				CCB2A5D32EE126D300ABF51E /* PLANO_DE_AÇÃO_COMPLETO.md in Resources */,
+				CCB2A5CD2EE11F5E00ABF51E /* CORREÇÕES_HIERARQUIA.md in Resources */,
+				CCB2A5D52EE128AF00ABF51E /* STATUS_BRIDGE_AI.md in Resources */,
+				CCB2A5D12EE1268A00ABF51E /* DIAGNÓSTICO_SEMANAS_FALTANDO.md in Resources */,
+				CCB2A5D92EE12A9000ABF51E /* RESUMO_FINAL_CORREÇÕES.md in Resources */,
+				CCB2A5DB2EE12B4100ABF51E /* CORREÇÃO_ERROS_AISERVICE.md in Resources */,
+				CCFD331C2EDEB354007CDCFB /* LIBRARY_HIERARCHY_FIX.md in Resources */,
+				CCB2A5DF2EE131E100ABF51E /* CORREÇÃO_PACE_CIENTÍFICO.md in Resources */,
 				CC7F0B452ED3EF3000CEBC64 /* Assets.xcassets in Resources */,
+				CCB2A5E12EE1344C00ABF51E /* INSTRUÇÕES_TESTE_FINAL.md in Resources */,
+				CCB2A5CF2EE1264300ABF51E /* CORREÇÃO_PACE_E_CONTEXTO.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -281,16 +383,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC0C353D2EDA152B00500C51 /* Extensions.swift in Sources */,
+				CC7F0B962ED532C500CEBC64 /* LibraryView.swift in Sources */,
 				CC7F0B462ED3EF3000CEBC64 /* AudioManager.swift in Sources */,
 				CC7F0B922ED487AA00CEBC64 /* Secrets.swift in Sources */,
 				CC7F0B472ED3EF3000CEBC64 /* HealthKitManager.swift in Sources */,
+				CC0C353B2ED96A3000500C51 /* NotificationManager.swift in Sources */,
 				CC7F0B482ED3EF3000CEBC64 /* MainTabView.swift in Sources */,
 				CC7F0B8D2ED41C5500CEBC64 /* WorkoutKitManager.swift in Sources */,
+				CC0C35392ED93F4F00500C51 /* ProfileSettingsView.swift in Sources */,
 				CC7F0B492ED3EF3000CEBC64 /* VoiceCoachView.swift in Sources */,
+				CC7F0B982ED53C5C00CEBC64 /* DashboardView.swift in Sources */,
 				CC7F0B4A2ED3EF3000CEBC64 /* ContentView.swift in Sources */,
+				CC7F0B942ED4ACD600CEBC64 /* DataModels.swift in Sources */,
 				CC7F0B502ED3EFC100CEBC64 /* PhoneSessionManager.swift in Sources */,
 				CC7F0B782ED4051600CEBC64 /* WeeklyPlanView.swift in Sources */,
 				CC7F0B4B2ED3EF3000CEBC64 /* AIService.swift in Sources */,
+				CCA156692ED57372008FB04C /* ImportPlanSheet.swift in Sources */,
+				CCA156672ED57337008FB04C /* FileManagerHelpers.swift in Sources */,
+				CC0C35372ED808A800500C51 /* WorkoutPlanService.swift in Sources */,
+				CCA156652ED55448008FB04C /* Color+Extensions.swift in Sources */,
+				CC0C353F2EDD620800500C51 /* PostWorkoutView.swift in Sources */,
+				CC7F0B9C2ED54A0200CEBC64 /* OnboardingView.swift in Sources */,
 				CC7F0B4C2ED3EF3000CEBC64 /* MaratonaNoPulsoApp.swift in Sources */,
 				CC7F0B4D2ED3EF3000CEBC64 /* Models.swift in Sources */,
 			);
@@ -506,7 +620,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MaratonaNoPulso/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "A Maratona No Pulso";
+				INFOPLIST_KEY_CFBundleDisplayName = FlyRun;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Precisamos acessar seus dados de saúde para criar treinos personalizados";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Precisamos salvar seus treinos no HealthKit";
@@ -549,7 +663,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MaratonaNoPulso/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "A Maratona No Pulso";
+				INFOPLIST_KEY_CFBundleDisplayName = FlyRun;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Precisamos acessar seus dados de saúde para criar treinos personalizados";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Precisamos salvar seus treinos no HealthKit";

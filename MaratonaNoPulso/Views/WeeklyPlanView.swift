@@ -1,191 +1,209 @@
 import SwiftUI
-import WorkoutKit
+import Combine
+import HealthKit
 
 struct WeeklyPlanView: View {
-    @StateObject private var aiService = AIService()
-    @StateObject private var workoutManager = WorkoutKitManager.shared
-    @StateObject private var audioManager = AudioManager()
+    @State private var userProfile = AIUserProfile(
+        name: "Corredor",
+        experienceLevel: "Intermediário",
+        goal: "Maratona",
+        daysPerWeek: 4,
+        currentDistance: 30.0
+    )
     
-    @State private var appleWorkoutPlan: WorkoutKit.WorkoutPlan?
-    @State private var showPreview: Bool = false
+    @State private var weeklyPlan: [DailyPlan] = []
+    @State private var showSaveConfirmation = false
     
-    @State private var plan: WeeklyTrainingPlan?
-    @State private var isLoading = false
-    @State private var errorMessage: String?
+    // SERVIÇOS
+    @StateObject private var aiService = AIService.shared  // 🔥 Usando singleton
+    @StateObject private var hkManager = HealthKitManager.shared
     
     var body: some View {
         NavigationStack {
-            ZStack {
-                // Fundo Bonito (Cinza Escuro Profundo)
-                Color(red: 0.1, green: 0.1, blue: 0.12).ignoresSafeArea()
-                
-                VStack(spacing: 20) {
-                    
-                    // HEADER (Transcrição)
-                    VStack(spacing: 10) {
-                        Text(audioManager.isListening ? "🦻 Ouvindo..." : "🎙️ Toque para falar")
-                            .font(.headline)
-                            .foregroundStyle(.gray)
-                        
-                        if !audioManager.transcribedText.isEmpty {
-                            Text("\"\(audioManager.transcribedText)\"")
-                                .font(.body)
-                                .foregroundStyle(.white)
-                                .padding()
-                                .background(Color.white.opacity(0.1))
-                                .cornerRadius(10)
-                        }
-                    }
-                    .padding(.top)
-                    
-                    // CONTEÚDO PRINCIPAL
-                    if isLoading {
-                        VStack {
-                            ProgressView()
-                                .tint(.white)
-                                .scaleEffect(1.5)
-                            Text("Criando treino inteligente...")
-                                .foregroundStyle(.white)
-                                .padding(.top)
-                        }
-                        .frame(maxHeight: .infinity)
-                        
-                    } else if let plan = plan, !plan.workouts.isEmpty {
-                        // LISTA DE TREINOS (Visual Card)
-                        ScrollView {
-                            VStack(spacing: 12) {
-                                ForEach(plan.workouts) { workout in
-                                    WorkoutCard(workout: workout) {
-                                        if !workout.is_rest_day {
-                                            presentWorkoutPreview(for: workout)
-                                        }
-                                    }
-                                }
-                            }
-                            .padding()
-                        }
-                    } else {
-                        // ESTADO VAZIO / ERRO
-                        VStack(spacing: 15) {
-                            Image(systemName: "figure.run.square.stack")
-                                .font(.system(size: 60))
-                                .foregroundStyle(.gray)
-                            
-                            Text(errorMessage ?? "Nenhum plano gerado ainda.")
-                                .foregroundStyle(.gray)
-                                .multilineTextAlignment(.center)
-                        }
-                        .frame(maxHeight: .infinity)
-                    }
-                    
-                    // BOTÃO DO MICROFONE
-                    Button {
-                        toggleRecording()
-                    } label: {
-                        ZStack {
-                            Circle()
-                                .fill(audioManager.isListening ? Color.red : Color.blue)
-                                .frame(width: 72, height: 72)
-                                .shadow(radius: 10)
-                            
-                            Image(systemName: audioManager.isListening ? "stop.fill" : "mic.fill")
-                                .font(.title)
-                                .foregroundStyle(.white)
-                        }
-                    }
-                    .padding(.bottom, 20)
-                }
-            }
-            .navigationTitle("AI Coach")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbarColorScheme(.dark, for: .navigationBar)
-            .workoutPreview(appleWorkoutPlan ?? WorkoutKitManager.emptyPlan, isPresented: $showPreview)
-        }
-    }
-    
-    // MARK: - Componente Visual do Card
-    func WorkoutCard(workout: DailyWorkout, action: @escaping () -> Void) -> some View {
-        HStack {
-            // Ícone do Dia
             VStack {
-                Text("DIA")
-                    .font(.caption2)
-                    .fontWeight(.bold)
-                    .foregroundStyle(.gray)
-                Text("\(workout.day)")
-                    .font(.title2)
-                    .fontWeight(.heavy)
-                    .foregroundStyle(.white)
-            }
-            .frame(width: 50)
-            
-            // Detalhes
-            VStack(alignment: .leading, spacing: 4) {
-                Text(workout.workout_name)
-                    .font(.headline)
-                    .foregroundStyle(.white)
-                
-                HStack {
-                    Image(systemName: workout.workout_type.icon)
-                    if !workout.is_rest_day {
-                        Text("\(workout.duration_minutes) min • \(String(format: "%.1f", workout.distance_km ?? 0)) km")
-                    } else {
-                        Text("Recuperação")
-                    }
+                if weeklyPlan.isEmpty {
+                    emptyStateView
+                } else {
+                    planListView
                 }
-                .font(.caption)
-                .foregroundStyle(.gray)
             }
-            
-            Spacer()
-            
-            // Botão de Adicionar (Só se não for descanso)
-            if !workout.is_rest_day {
-                Button(action: action) {
-                    Image(systemName: "plus.circle.fill")
-                        .font(.system(size: 32))
-                        .foregroundStyle(Color.green)
+            .navigationTitle("Plano de Treino")
+            .alert("Sucesso", isPresented: $showSaveConfirmation) {
+                Button("OK", role: .cancel) { }
+            } message: {
+                Text("Treino salvo na sua biblioteca!")
+            }
+            // Observando mudanças na IA
+            .onChange(of: aiService.suggestedWorkouts) { oldWorkouts, newWorkouts in
+                if !newWorkouts.isEmpty {
+                    addGeneratedWorkoutsToPlan(newWorkouts)
                 }
+            }
+            .onAppear {
+                hkManager.fetchAllData()
             }
         }
-        .padding()
-        .background(Color(red: 0.18, green: 0.18, blue: 0.2)) // Cinza Card
-        .cornerRadius(16)
     }
     
-    // MARK: - Lógica
-    func toggleRecording() {
-        if audioManager.isListening {
-            audioManager.stopRecording()
-            generatePlan()
-        } else {
-            errorMessage = nil
-            audioManager.startRecording()
+    // MARK: - Subviews
+    
+    var emptyStateView: some View {
+        VStack(spacing: 20) {
+            Image(systemName: "figure.run.circle")
+                .font(.system(size: 60))
+                .foregroundStyle(.blue)
+            
+            Text("Gerar Próximo Treino")
+                .font(.title2)
+            
+            VStack {
+                TextField("Objetivo", text: $userProfile.goal)
+                    .textFieldStyle(.roundedBorder)
+                Stepper("Dias/Semana: \(userProfile.daysPerWeek)", value: $userProfile.daysPerWeek, in: 1...7)
+            }
+            .padding()
+            .frame(maxWidth: 300)
+            
+            Button(action: generatePlan) {
+                if aiService.isLoading {
+                    ProgressView().tint(.white)
+                } else {
+                    Text("Solicitar à IA").bold()
+                }
+            }
+            .buttonStyle(.borderedProminent)
+            .disabled(aiService.isLoading)
+            
+            if let error = aiService.errorMessage {
+                Text(error).foregroundStyle(.red).font(.caption)
+            }
         }
     }
+    
+    var planListView: some View {
+        List {
+            ForEach(weeklyPlan) { dayPlan in
+                VStack(alignment: .leading) {
+                    HStack {
+                        Text(dayPlan.day).font(.caption).bold().foregroundStyle(.secondary)
+                        Spacer()
+                        Image(systemName: "figure.run").foregroundStyle(.blue)
+                    }
+                    
+                    Text(dayPlan.title).font(.headline)
+                    Text(dayPlan.description).font(.caption).lineLimit(2).foregroundStyle(.secondary)
+                    
+                    if let phase = dayPlan.cyclePhase {
+                        Text(phase).font(.caption2).padding(4).background(Color.blue.opacity(0.1)).cornerRadius(4).padding(.top, 2)
+                    }
+                    
+                    Button(action: { saveToLibrary(plan: dayPlan) }) {
+                        Label("Salvar na Biblioteca", systemImage: "arrow.down.doc").font(.caption)
+                    }
+                    .buttonStyle(.borderless).padding(.top, 5)
+                }
+                .padding(.vertical, 4)
+            }
+        }
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button("Limpar") { weeklyPlan = [] }
+            }
+        }
+    }
+    
+    // MARK: - Logic
     
     func generatePlan() {
-        guard !audioManager.transcribedText.isEmpty else { return }
-        isLoading = true
+        var existingPlans: [DailyPlan] = []
+        if let data = UserDefaults.standard.data(forKey: "saved_workouts"),
+           let saved = try? JSONDecoder().decode([DailyPlan].self, from: data) {
+            existingPlans = saved
+        }
         
-        Task {
-            let result = await aiService.generateWeeklyPlan(from: audioManager.transcribedText)
-            
-            await MainActor.run {
-                self.isLoading = false
-                if let validPlan = result {
-                    self.plan = validPlan
-                } else {
-                    self.errorMessage = "Erro ao ler resposta da AI. Tente de novo."
-                }
+        var healthStats = "Resumo dos últimos 7 dias:\n"
+        healthStats += "- Volume Total: \(String(format: "%.1f", hkManager.weeklyDistance)) km\n"
+        
+        let sortedHistory = hkManager.dailyHistory.sorted(by: { $0.date > $1.date })
+        if sortedHistory.isEmpty {
+            healthStats += "  (Sem dados recentes)\n"
+        } else {
+            for activity in sortedHistory.prefix(7) {
+                let dist = String(format: "%.1f", activity.distance)
+                healthStats += "  - \(activity.day): \(dist) km\n"
             }
+        }
+
+        aiService.generateWeekPlan(
+            for: userProfile,
+            healthContext: healthStats,
+            instruction: "Gere sua semana de treino focada no objetivo.",
+            existingPlans: existingPlans
+        )
+    }
+    
+    func addGeneratedWorkoutsToPlan(_ workouts: [AIWorkoutPlan]) {
+        self.weeklyPlan.removeAll()
+        for workout in workouts {
+            var structureJson: String? = nil
+            if let segments = workout.segments, !segments.isEmpty,
+               let encodedData = try? JSONEncoder().encode(segments) {
+                structureJson = String(data: encodedData, encoding: .utf8)
+            }
+            
+            let finalDescription = workout.description ?? workout.rawInstructionText ?? "Treino gerado por IA."
+            
+            let newPlan = DailyPlan(
+                id: UUID(),
+                day: workout.suggestedDay ?? "Dia",
+                activityType: "running",
+                title: workout.title,
+                description: finalDescription,
+                structure: structureJson,
+                isCompleted: false,
+                sourceIcon: "waveform.path.ecg",
+                sourceLabel: "Coach AI",
+                safetyBadge: workout.difficultyRating,
+                coachTips: workout.zoneFocus,
+                cyclePhase: workout.cyclePhase,
+                cycleTarget: workout.cycleTarget,
+                rawInstructionText: workout.rawInstructionText,
+                workoutReasoning: workout.workoutReasoning
+            )
+            self.weeklyPlan.append(newPlan)
         }
     }
     
-    func presentWorkoutPreview(for dailyWorkout: DailyWorkout) {
-        if let customWorkout = workoutManager.createCustomWorkout(from: dailyWorkout) {
-            self.appleWorkoutPlan = WorkoutKit.WorkoutPlan(.custom(customWorkout))
-            self.showPreview = true
+    func saveToLibrary(plan: DailyPlan) {
+        var savedWorkouts: [DailyPlan] = []
+        if let data = UserDefaults.standard.data(forKey: "saved_workouts"),
+           let decoded = try? JSONDecoder().decode([DailyPlan].self, from: data) {
+            savedWorkouts = decoded
+        }
+        
+        let newWorkout = DailyPlan(
+            id: UUID(),
+            day: plan.day,
+            activityType: plan.activityType,
+            title: plan.title,
+            description: plan.description,
+            structure: plan.structure,
+            isCompleted: false,
+            sourceIcon: plan.sourceIcon,
+            sourceLabel: plan.sourceLabel,
+            safetyBadge: plan.safetyBadge,
+            coachTips: plan.coachTips,
+            cyclePhase: plan.cyclePhase,
+            cycleTarget: plan.cycleTarget,
+            rawInstructionText: plan.rawInstructionText,
+            workoutReasoning: plan.workoutReasoning
+        )
+        
+        savedWorkouts.insert(newWorkout, at: 0)
+        
+        if let encoded = try? JSONEncoder().encode(savedWorkouts) {
+            UserDefaults.standard.set(encoded, forKey: "saved_workouts")
+            showSaveConfirmation = true
         }
     }
 }
